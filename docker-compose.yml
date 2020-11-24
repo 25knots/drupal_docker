@@ -15,8 +15,6 @@ services:
       - DRUPAL_SETTINGS=development
     ports:
       - "32770:80"
-    networks:
-      - robobot_dev
     container_name: dds_web
 
   db:
@@ -28,8 +26,6 @@ services:
       - db_data:/var/lib/mysql
     ports:
       - "32771:3306"
-    networks:
-      - robobot_dev
     container_name: dds_db
     command: mysqld --max_allowed_packet=16M
 
@@ -40,8 +36,6 @@ services:
       - VIRTUAL_PORT=1080
     ports:
       - "32772:1080"
-    networks:
-      - robobot_dev
     container_name: dds_mailcatcher
 
   selenium:
@@ -54,8 +48,6 @@ services:
     cap_add:
       - NET_ADMIN
       - NET_RAW
-    networks:
-      - robobot_dev
     container_name: dds_selenium
 
 volumes:
