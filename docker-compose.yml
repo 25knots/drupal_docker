@@ -1,0 +1,62 @@
+version: "3.5"
+
+services:
+  web:
+    build:
+      context: ./build/web
+      args:
+        - APP_ENVIRONMENT=prod
+    volumes:
+      - ./site:/var/www:delegated
+    links:
+      - db
+      - mailcatcher
+    environment:
+      - DRUPAL_SETTINGS=development
+    ports:
+      - "32770:80"
+    networks:
+      - robobot_dev
+    container_name: dds_web
+
+  db:
+    image: mariadb:10.3
+    environment:
+      - MYSQL_ROOT_PASSWORD=root
+      - MYSQL_DATABASE=dds
+    volumes:
+      - db_data:/var/lib/mysql
+    ports:
+      - "32771:3306"
+    networks:
+      - robobot_dev
+    container_name: dds_db
+    command: mysqld --max_allowed_packet=16M
+
+  mailcatcher:
+    image: schickling/mailcatcher
+    environment:
+      - VIRTUAL_HOST=mailcatcher.dds.local
+      - VIRTUAL_PORT=1080
+    ports:
+      - "32772:1080"
+    networks:
+      - robobot_dev
+    container_name: dds_mailcatcher
+
+  selenium:
+    image: selenium/standalone-firefox-debug:2.48.2
+    links:
+      - web
+    ports:
+      - "32773:4444"
+      - "32774:5900"
+    cap_add:
+      - NET_ADMIN
+      - NET_RAW
+    networks:
+      - robobot_dev
+    container_name: dds_selenium
+
+volumes:
+  db_data:

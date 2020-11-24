@@ -1,0 +1,52 @@
+version: "3.5"
+
+services:
+  web:
+    build:
+      context: ./build/web
+    volumes:
+      - /app/site:/var/www:rw,cached
+    links:
+      - db
+      - mailcatcher
+    environment:
+      - VIRTUAL_HOST=ddslocal
+      - DRUPAL_SETTINGS=development
+    ports:
+      - "80"
+    network_mode: "bridge"
+    container_name: dds_web
+
+  db:
+    image: mariadb:10.2
+    environment:
+      - MYSQL_ROOT_PASSWORD=root
+      - MYSQL_DATABASE=dds
+    ports:
+      - "3306"
+    network_mode: "bridge"
+    container_name: dds_db
+    command: mysqld --max_allowed_packet=16M
+
+  mailcatcher:
+    image: schickling/mailcatcher
+    environment:
+      - VIRTUAL_HOST=mailcatcher.dds.local
+      - VIRTUAL_PORT=1080
+    ports:
+      - "1080"
+    network_mode: "bridge"
+    container_name: dds_mailcatcher
+
+  selenium:
+    image: selenium/standalone-firefox-debug:2.48.2
+    links:
+      - web
+    ports:
+      - "4444"
+      - "5900"
+    cap_add:
+      - NET_ADMIN
+      - NET_RAW
+    network_mode: "bridge"
+    container_name: dds_selenium
