@@ -12,3 +12,9 @@ https://github.com/25knots/drupal_docker_site
 3. `docker-compose up -d`
 4. Install the site with: `docker-compose exec web bash /var/www/scripts/install-site.sh`
 5. You should be able to access the site on the IP address of your docker host and port 32770. E.g. `http://localhost:32770` Admin login is `admin/admin`.
+
+## Enable Xdebug
+
+1. Change the APP_ENVIRONMENT arg in the docker-compose.yml file for the web container to dev.
+2. Rebuild the web container: `docker-compose build web`.
+3. After running `docker-compose up -d` again Xdebug should be available.
