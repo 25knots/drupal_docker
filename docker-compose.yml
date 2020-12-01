@@ -5,7 +5,7 @@ services:
     build:
       context: ./build/web
       args:
-        - APP_ENVIRONMENT=prod
+        - APP_ENVIRONMENT=dev
     volumes:
       - ./site:/var/www:delegated
     links:
@@ -14,8 +14,9 @@ services:
     environment:
       - DRUPAL_SETTINGS=development
     ports:
-      - "32770:80"
-    container_name: dds_web
+      - "32790:80"
+    network_mode: bridge
+    container_name: oec_web
 
   db:
     image: mariadb:10.3
@@ -26,7 +27,8 @@ services:
       - db_data:/var/lib/mysql
     ports:
       - "32771:3306"
-    container_name: dds_db
+    container_name: oec_db
+    network_mode: bridge
     command: mysqld --max_allowed_packet=16M
 
   mailcatcher:
@@ -36,7 +38,8 @@ services:
       - VIRTUAL_PORT=1080
     ports:
       - "32772:1080"
-    container_name: dds_mailcatcher
+    network_mode: bridge
+    container_name: oec_mailcatcher
 
   selenium:
     image: selenium/standalone-firefox-debug:2.48.2
@@ -48,7 +51,8 @@ services:
     cap_add:
       - NET_ADMIN
       - NET_RAW
-    container_name: dds_selenium
+    network_mode: bridge
+    container_name: oec_selenium
 
 volumes:
   db_data:

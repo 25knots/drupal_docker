@@ -44,13 +44,10 @@ RUN echo "export TERM=xterm" >> ~/.bashrc
 # Xdebug.
 RUN if [ "$APP_ENVIRONMENT" = "dev" ] ; then pecl install xdebug ; fi
 RUN if [ "$APP_ENVIRONMENT" = "dev" ] ; then docker-php-ext-enable xdebug; fi
-RUN if [ "$APP_ENVIRONMENT" = "dev" ] ; then echo 'xdebug.remote_autostart=true' >> /usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini; fi
-RUN if [ "$APP_ENVIRONMENT" = "dev" ] ; then echo 'xdebug.remote_port=9001' >> /usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini; fi
+RUN if [ "$APP_ENVIRONMENT" = "dev" ] ; then echo 'xdebug.xdebug.start_with_request=yes' >> /usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini; fi
 RUN if [ "$APP_ENVIRONMENT" = "dev" ] ; then echo 'xdebug.mode=debug' >> /usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini; fi
 RUN if [ "$APP_ENVIRONMENT" = "dev" ] ; then echo 'xdebug.client_port=9001' >> /usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini; fi
 RUN if [ "$APP_ENVIRONMENT" = "dev" ] ; then echo 'xdebug.client_host=host.docker.internal' >> /usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini; fi
-RUN if [ "$APP_ENVIRONMENT" = "dev" ] ; then echo 'xdebug.remote_host=host.docker.internal' >> /usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini; fi
-RUN if [ "$APP_ENVIRONMENT" = "dev" ] ; then echo 'xdebug.remote_enable=1' >> /usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini; fi
 RUN if [ "$APP_ENVIRONMENT" = "dev" ] ; then echo 'xdebug.idekey=PHPSTORM' >> /usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini; fi
 
 ## Settings to test later:
