@@ -10,7 +10,7 @@ It will help you install a clean site on your machine via Docker and can be used
 2. Make sure composer dependencies or installed in the site dir, recommended:
 https://github.com/25knots/drupal_docker_site
 3. `docker-compose up -d`
-4. Install the site with: `docker-compose exec web bash /var/www/scripts/install-site.sh`
+4. Install the site with: `docker-compose exec web bash /var/www/scripts/install_site.sh`
 5. You should be able to access the site on the IP address of your docker host and port 32770. E.g. `http://localhost:32770` Admin login is `admin/admin`.
 
 ## Enable Xdebug
