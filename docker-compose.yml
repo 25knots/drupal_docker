@@ -14,7 +14,7 @@ services:
     environment:
       - DRUPAL_SETTINGS=development
     ports:
-      - "32790:80"
+      - "32770:80"
     network_mode: bridge
     container_name: oec_web
 
